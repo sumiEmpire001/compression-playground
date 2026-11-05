@@ -4,22 +4,6 @@ import json
 from pathlib import Path
 
 
-def encode(data):
-    if not isinstance(data,bytes):
-        raise TypeError("input must be bytes")
-    output=bytearray(b"RLE1")
-    for index in range(0,len(data)):
-        if index and data[index]==data[index-1]:
-            continue
-        value=data[index]
-        count=1
-        while index+count<len(data) and data[index+count]==value and count<255:
-            count+=1
-        # Each run is encoded by a count and byte value.
-        output.extend((count,value))
-    return bytes(output)
-
-
 def encode_runs(data):
     if not isinstance(data,bytes):
         raise TypeError("input must be bytes")
